@@ -46,6 +46,7 @@ public class Libro extends Producto implements Prestable {
     public boolean estaPrestado(){
         return prestado;
     }
+
     @Override
     public String toString() {
         return "Libro{" +
