@@ -49,13 +49,12 @@ public class Libro extends Producto implements Prestable {
 
     @Override
     public String toString() {
-        return "Libro{" +
-                "autor='" + autor + '\'' +
-                ", ISBN='" + ISBN + '\'' +
-                ", id='" + id + '\'' +
-                ", titulo='" + titulo + '\'' +
-                ", anho='" + anho + '\'' +
-                ", formato=" + formato +
-                '}';
+        return "Libro -> " +
+                "autor= '" + autor + '\'' +
+                ", ISBN= '" + ISBN + '\'' +
+                ", id= '" + id + '\'' +
+                ", titulo= '" + titulo + '\'' +
+                ", anho= '" + anho + '\'' +
+                ", formato= '" + formato + "'";
     }
 }

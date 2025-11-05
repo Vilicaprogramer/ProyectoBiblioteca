@@ -22,7 +22,7 @@ public abstract class Producto {
         this.formato = formato;
     }
 
-    protected String getId() {
+    public String getId() {
         return id;
     }
 

@@ -2,31 +2,31 @@ package biblioteca.simple.modelo;
 
 import biblioteca.simple.contratos.Prestable;
 
-public class Pelicula extends Producto implements Prestable {
+public class Videojuego extends Producto implements Prestable {
 
-    private String director;
-    private int duracion;
+    private String plataforma;
+    private String genero;
     private boolean prestado;
     private Usuario prestadoA;
 
-    public Pelicula(String titulo, String anho, Formato formato, String director, int duracion) {
+    public Videojuego(String titulo, String anho, Formato formato, String plataforma, String genero) {
         super(titulo, anho, formato);
-        this.director = director;
-        this.duracion = duracion;
+        this.plataforma = plataforma;
+        this.genero = genero;
     }
 
-    public Pelicula(String id, String titulo, String anho, Formato formato, String director, int duracion) {
+    public Videojuego(String id, String titulo, String anho, Formato formato, String plataforma, String genero) {
         super(id, titulo, anho, formato);
-        this.director = director;
-        this.duracion = duracion;
+        this.plataforma = plataforma;
+        this.genero = genero;
     }
 
-    public String getDirector() {
-        return director;
+    public String getPlataforma() {
+        return plataforma;
     }
 
-    public int getDuracion() {
-        return duracion;
+    public String getGenero() {
+        return genero;
     }
 
     @Override
@@ -42,7 +42,6 @@ public class Pelicula extends Producto implements Prestable {
         this.prestadoA = null;
     }
 
-
     @Override
     public boolean estaPrestado(){
         return prestado;
@@ -50,12 +49,13 @@ public class Pelicula extends Producto implements Prestable {
 
     @Override
     public String toString() {
-        return "Pelicula -> " +
-                "director= '" + director + '\'' +
-                ", duracion= " + duracion +
+        return "Videojuego -> " +
+                "plataforma= '" + plataforma + '\'' +
+                ", genero= '" + genero + '\'' +
                 ", id= '" + id + '\'' +
                 ", titulo= '" + titulo + '\'' +
                 ", anho= '" + anho + '\'' +
-                ", formato= '" + formato + "'";
+                ", formato= ?" + formato + "'";
     }
 }
+
