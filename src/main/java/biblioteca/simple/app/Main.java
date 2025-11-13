@@ -3,6 +3,7 @@ package biblioteca.simple.app;
 import biblioteca.simple.contratos.Prestable;
 import biblioteca.simple.modelo.*;
 import biblioteca.simple.servicios.Catalogo;
+import biblioteca.simple.servicios.PersistenciaUsuarios;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -15,7 +16,7 @@ public class Main {
     // Crear Objeto catálogo
     private static final Catalogo catalogo = new Catalogo();
     // Lista usuarios
-    private static final List<Usuario> usuario = new ArrayList<>();
+    private static final List<Usuario> usuarios = new ArrayList<>();
 
     public static void main(String[] args) {
         cargarDatos();
@@ -39,14 +40,14 @@ public class Main {
         catalogo.alta(new Videojuego("V3", "Minecraft", "2011", Formato.DIGITAL, "PC", "Sandbox"));
         catalogo.alta(new Videojuego("V4", "Red Dead Redemption 2", "2018", Formato.FISICO, "PlayStation 4", "Mundo Abierto"));
 
-        usuario.add(new Usuario("U1", "Juan"));
-        usuario.add(new Usuario("U2", "María"));
-        usuario.add(new Usuario("U3", "Carlos"));
-        usuario.add(new Usuario("U4", "Lucía"));
-        usuario.add(new Usuario("U5", "Pedro"));
-        usuario.add(new Usuario("U6", "Ana"));
-        usuario.add(new Usuario("U7", "Sofía"));
-        usuario.add(new Usuario("U8", "Miguel"));
+        usuarios.add(new Usuario("U1", "Juan"));
+        usuarios.add(new Usuario("U2", "María"));
+        usuarios.add(new Usuario("U3", "Carlos"));
+        usuarios.add(new Usuario("U4", "Lucía"));
+        usuarios.add(new Usuario("U5", "Pedro"));
+        usuarios.add(new Usuario("U6", "Ana"));
+        usuarios.add(new Usuario("U7", "Sofía"));
+        usuarios.add(new Usuario("U8", "Miguel"));
 
     }
     // Menu |
@@ -69,6 +70,8 @@ public class Main {
             System.out.println("5. Devolver Producto");
             System.out.println("6. Listar Usuarios");
             System.out.println("7. Crear Nuevo Usuario");
+            System.out.println("8. Exportar Usuarios");
+            System.out.println("9. Importar Usuarios");
             System.out.println("0. Salir");
             // Roll back por si no mete un entero
             while(!sc.hasNextInt()) sc.next();
@@ -82,6 +85,8 @@ public class Main {
                 case 5 -> devolver();
                 case 6 -> listarUsuarios();
                 case 7 -> crearUsuario();
+                case 8 -> exportarUsuarios();
+                case 9 -> importarUsuarios();
                 case 0 -> System.out.println("Sayonara!");
                 default -> System.out.println("Opción no válida");
             }
@@ -195,16 +200,16 @@ public class Main {
     }
 
     private static void listarUsuarios() {
-        if (usuario.isEmpty()) {
+        if (usuarios.isEmpty()) {
             System.out.println("No hay usuarios registrados");
             return;
         }
         System.out.println("-- LISTA USUARIOS --");
-        usuario.forEach(u -> System.out.println("- Código : " + u.getId() + "| nombre: " + u.getNombre()));
+        usuarios.forEach(u -> System.out.println("- Código : " + u.getId() + "| nombre: " + u.getNombre()));
     }
 
     private static Usuario getUsuarioPorCodigo(String id) {
-        return usuario.stream().filter(u -> u.getId().equals(id)).findFirst().orElse(null);
+        return usuarios.stream().filter(u -> u.getId().equals(id)).findFirst().orElse(null);
     }
 
     private static void crearUsuario() {
@@ -225,6 +230,26 @@ public class Main {
         System.out.println("Introduce el nombre del nuevo Usuario: ");
         String nombre = sc.nextLine();
 
-        usuario.add(new Usuario(id, nombre));
+        usuarios.add(new Usuario(id, nombre));
+    }
+
+    private static void exportarUsuarios(){
+        try {
+            PersistenciaUsuarios.exportar(usuarios);
+            System.out.println("Usuarios exportados correctamente");
+        } catch (Exception e){
+            System.out.println("Error al exportar ususarios " + e.getMessage());
+        }
+    }
+
+    private static void importarUsuarios(){
+        try{
+            List<Usuario> cargados = PersistenciaUsuarios.importar();
+            usuarios.clear();
+            usuarios.addAll(cargados);
+            System.out.println("Usuarios cargados con éxito");
+        } catch (Exception e){
+            System.out.println("Error al importar: " + e.getMessage());
+        }
     }
 }
